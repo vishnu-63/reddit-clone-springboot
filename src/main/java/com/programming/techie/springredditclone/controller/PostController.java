@@ -16,32 +16,48 @@ import static org.springframework.http.ResponseEntity.status;
 @RequestMapping("/api/posts")
 @AllArgsConstructor
 public class PostController {
-
-    private final PostService postService;
+    private final PostService postservice;
 
     @PostMapping
     public ResponseEntity<Void> createPost(@RequestBody PostRequest postRequest) {
-        postService.save(postRequest);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
 
-    @GetMapping
-    public ResponseEntity<List<PostResponse>> getAllPosts() {
-        return status(HttpStatus.OK).body(postService.getAllPosts());
+        postservice.save(postRequest);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PostResponse> getPost(@PathVariable Long id) {
-        return status(HttpStatus.OK).body(postService.getPost(id));
+        return status(HttpStatus.OK).body(postservice.getPost(id));
     }
 
-    @GetMapping(params = "subredditId")
-    public ResponseEntity<List<PostResponse>> getPostsBySubreddit(@RequestParam Long subredditId) {
-        return status(HttpStatus.OK).body(postService.getPostsBySubreddit(subredditId));
+    @PutMapping("/update")
+    public ResponseEntity<PostResponse> updatePost(@RequestBody PostRequest postRequest) {
+
+        System.out.println(postRequest);
+
+        return status(HttpStatus.OK).body(postservice.update(postRequest));
     }
 
-    @GetMapping(params = "username")
-    public ResponseEntity<List<PostResponse>> getPostsByUsername(@RequestParam String username) {
-        return status(HttpStatus.OK).body(postService.getPostsByUsername(username));
+    @GetMapping("/")
+    public ResponseEntity<List<PostResponse>> getAllPosts() {
+        return status(HttpStatus.OK).body(postservice.getAllPosts());
     }
+
+    @GetMapping("/by-subreddit/{id}")
+    public ResponseEntity<List<PostResponse>> getPostsBySubreddit(@PathVariable Long id) {
+        return status(HttpStatus.OK).body(postservice.getPostsBySubreddit(id));
+    }
+
+    @GetMapping("/by-user/{name}")
+    public ResponseEntity<List<PostResponse>> getPostsByUserName(@PathVariable String name) {
+
+        return status(HttpStatus.OK).body(postservice.getPostsByUserName(name));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deletePostById(@PathVariable Long id) {
+        postservice.deletePostById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

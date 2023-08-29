@@ -18,13 +18,12 @@ import static java.util.stream.Collectors.toList;
 @AllArgsConstructor
 @Slf4j
 public class SubredditService {
-
     private final SubredditRepository subredditRepository;
     private final SubredditMapper subredditMapper;
-
+    private final AuthService authService;
     @Transactional
     public SubredditDto save(SubredditDto subredditDto) {
-        Subreddit save = subredditRepository.save(subredditMapper.mapDtoToSubreddit(subredditDto));
+        Subreddit save=subredditRepository.save(subredditMapper.mapDtoToSubreddit(subredditDto,authService.getCurrentUser()));
         subredditDto.setId(save.getId());
         return subredditDto;
     }
@@ -33,13 +32,13 @@ public class SubredditService {
     public List<SubredditDto> getAll() {
         return subredditRepository.findAll()
                 .stream()
-                .map(subredditMapper::mapSubredditToDto)
+                .map(subredditMapper::mapSubredditDto)
                 .collect(toList());
     }
 
     public SubredditDto getSubreddit(Long id) {
-        Subreddit subreddit = subredditRepository.findById(id)
-                .orElseThrow(() -> new SpringRedditException("No subreddit found with ID - " + id));
-        return subredditMapper.mapSubredditToDto(subreddit);
+        Subreddit subreddit=subredditRepository.findById(id)
+                .orElseThrow(()->new SpringRedditException("No Sub Reddit Is Found With "+id));
+        return subredditMapper.mapSubredditDto(subreddit);
     }
 }

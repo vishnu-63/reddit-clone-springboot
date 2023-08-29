@@ -1,11 +1,9 @@
 package com.programming.techie.springredditclone.exceptions;
 
-public class SpringRedditException extends RuntimeException {
-    public SpringRedditException(String exMessage, Exception exception) {
-        super(exMessage, exception);
-    }
+import org.springframework.mail.MailException;
 
-    public SpringRedditException(String exMessage) {
-        super(exMessage);
+public class SpringRedditException extends RuntimeException {
+    public SpringRedditException(String exMsg) {
+        super(exMsg);
     }
 }

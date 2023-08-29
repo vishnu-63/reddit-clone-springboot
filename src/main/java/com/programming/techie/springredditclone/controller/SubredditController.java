@@ -15,19 +15,17 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 public class SubredditController {
-
     private final SubredditService subredditService;
 
-    @PostMapping
-    public ResponseEntity<SubredditDto> createSubreddit(@RequestBody SubredditDto subredditDto) {
+    @PostMapping()
+    public ResponseEntity<SubredditDto> createSubReddit(@RequestBody SubredditDto subredditDto) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(subredditService.save(subredditDto));
     }
 
     @GetMapping
-    public ResponseEntity<List<SubredditDto>> getAllSubreddits() {
-        return ResponseEntity
-                .status(HttpStatus.OK)
+    public ResponseEntity<List<SubredditDto>> getAllSubReddits() {
+        return ResponseEntity.status(HttpStatus.OK)
                 .body(subredditService.getAll());
     }
 
@@ -36,5 +34,6 @@ public class SubredditController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(subredditService.getSubreddit(id));
+
     }
 }

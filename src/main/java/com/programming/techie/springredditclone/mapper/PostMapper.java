@@ -18,7 +18,6 @@ import static com.programming.techie.springredditclone.model.VoteType.UPVOTE;
 
 @Mapper(componentModel = "spring")
 public abstract class PostMapper {
-
     @Autowired
     private CommentRepository commentRepository;
     @Autowired
@@ -64,7 +63,8 @@ public abstract class PostMapper {
             Optional<Vote> voteForPostByUser =
                     voteRepository.findTopByPostAndUserOrderByVoteIdDesc(post,
                             authService.getCurrentUser());
-            return voteForPostByUser.filter(vote -> vote.getVoteType().equals(voteType))
+
+            return  voteForPostByUser.filter(vote -> vote.getVoteType().equals(voteType))
                     .isPresent();
         }
         return false;

@@ -1,22 +1,24 @@
 package com.programming.techie.springredditclone.model;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
+import lombok.*;
+import org.springframework.stereotype.Service;
+
+import javax.persistence.*;
 import java.time.Instant;
 import java.util.List;
 
-import static jakarta.persistence.FetchType.LAZY;
-import static jakarta.persistence.GenerationType.IDENTITY;
+import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.GenerationType.IDENTITY;
+
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Builder
+@Getter
+@Setter
 public class Subreddit {
     @Id
     @GeneratedValue(strategy = IDENTITY)
